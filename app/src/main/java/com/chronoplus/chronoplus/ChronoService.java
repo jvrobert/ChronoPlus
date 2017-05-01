@@ -42,6 +42,7 @@ public class ChronoService extends Service {
     public static final int MESSAGE_FROM_SERIAL_PORT = 0;
     public static final int CTS_CHANGE = 1;
     public static final int DSR_CHANGE = 2;
+    public static final int STATUS_AVAILABLE = 3;
     private static final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
     private static final int BAUD_RATE = 9600; // BaudRate. Change this value if you need
     public static boolean SERVICE_CONNECTED = false;
@@ -87,9 +88,8 @@ public class ChronoService extends Service {
     }
 
     private void requestUserPermission() {
-        Log.i(TAG, "RequestPermission!!!");
-        //connection = usbManager.openDevice(device);
-        if (false || connection != null) {
+        connection = usbManager.openDevice(device);
+        if (connection != null) {
             new ConnectionThread().start();
         }
         else {
@@ -104,6 +104,11 @@ public class ChronoService extends Service {
         }
     }
 
+    private void setAvailable(boolean isAvailable) {
+        serialPortConnected = isAvailable;
+        if (mHandler != null)
+            mHandler.obtainMessage(STATUS_AVAILABLE, isAvailable).sendToTarget();
+    }
     /*
      * Different notifications from OS will be received here (USB attached, detached, permission responses...)
      * About BroadcastReceiver: http://developer.android.com/reference/android/content/BroadcastReceiver.html
@@ -125,6 +130,7 @@ public class ChronoService extends Service {
                     arg0.sendBroadcast(intent);
                 }
             } else if (arg1.getAction().equals(ACTION_USB_ATTACHED)) {
+                Log.i(TAG, "USB_ATTACHED!!!");
                 if (!serialPortConnected)
                     findSerialPortDevice(); // A USB device has been attached. Try to open it as a Serial port
             } else if (arg1.getAction().equals(ACTION_USB_DETACHED)) {
@@ -134,7 +140,7 @@ public class ChronoService extends Service {
                 if (serialPortConnected) {
                     serialPort.close();
                 }
-                serialPortConnected = false;
+                setAvailable(false);
             }
         }
     };
@@ -187,6 +193,10 @@ public class ChronoService extends Service {
             Intent intent = new Intent(ACTION_NO_USB);
             sendBroadcast(intent);
         }
+    }
+
+    public boolean isAvailable() {
+        return serialPortConnected;
     }
     /*
      *  Data received from serial port will be received here. Just populate onReceivedData with your code
@@ -243,7 +253,7 @@ public class ChronoService extends Service {
             serialPort = UsbSerialDevice.createUsbSerialDevice(device, connection);
             if (serialPort != null) {
                 if (serialPort.open()) {
-                    serialPortConnected = true;
+                    setAvailable(true);
                     serialPort.setBaudRate(BAUD_RATE);
                     serialPort.setDataBits(UsbSerialInterface.DATA_BITS_8);
                     serialPort.setStopBits(UsbSerialInterface.STOP_BITS_1);

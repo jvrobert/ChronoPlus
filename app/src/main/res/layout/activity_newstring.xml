@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="String Name" />
+
+    <EditText
+        android:id="@+id/stringName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:ems="10"
+        android:hint="Shot String Name"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description/Notes" />
+
+    <EditText
+        android:id="@+id/stringDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:ems="10"
+        android:inputType="textShortMessage" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pellet Type" />
+
+    <EditText
+        android:id="@+id/pelletName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:ems="10"
+        android:hint="Pellet Brand/Type"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pellet Weight (grains)" />
+
+    <EditText
+        android:id="@+id/pelletWeight"
+        android:layout_width="111dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:ems="10"
+        android:inputType="numberDecimal" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pellet DB" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_weight="1.10" />
+
+    <TextView
+        android:id="@+id/upccode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="@android:color/darker_gray"
+        android:visibility="invisible" />
+
+    <FrameLayout
+        android:id="@+id/scannerframe"
+        android:layout_width="match_parent"
+        android:layout_height="186dp">
+
+    </FrameLayout>
+</LinearLayout>
