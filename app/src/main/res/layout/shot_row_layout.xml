@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/shot_count"
+            android:layout_width="29dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="12."
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/shot_fps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="840fps" />
+
+        <TextView
+            android:id="@+id/shot_fpe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="23 FPE" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/shot_date"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="right"
+        android:text="5/1/17 2:17:30 pm" />
+
+
+</LinearLayout>

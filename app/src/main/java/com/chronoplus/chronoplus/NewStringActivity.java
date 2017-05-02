@@ -30,7 +30,6 @@ public class NewStringActivity extends AppCompatActivity implements ZXingScanner
     private Spinner mUpclist;
     private ArrayList<String> upcs;
     private String currentUPC = null;
-    private boolean is_loaded = false;
     public static final String TAG = "NewStringActivity";
 
     private TextView stringNameField;

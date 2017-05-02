@@ -8,11 +8,17 @@
     tools:context="com.chronoplus.chronoplus.ShotStringActivity">
 
     <LinearLayout
-        android:layout_width="368dp"
-        android:layout_height="495dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="0dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,7 +48,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/fps"
+                android:id="@+id/txt_fps"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
                 android:layout_weight="0.7"
@@ -70,8 +76,10 @@
             android:textColor="@android:color/holo_green_light" />
 
         <ListView
+            android:id="@+id/lv_shots"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@android:color/background_light" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

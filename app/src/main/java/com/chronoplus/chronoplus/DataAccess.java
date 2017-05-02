@@ -2,8 +2,10 @@ package com.chronoplus.chronoplus;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import nl.qbusict.cupboard.QueryResultIterable;
@@ -16,7 +18,7 @@ import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 
 public class DataAccess extends SQLiteOpenHelper {
     private static DataAccess sInstance;
-
+    private final static String TAG = "SQLHelper";
     // ...
 
     public static synchronized DataAccess getInstance(Context context) {
@@ -35,7 +37,7 @@ public class DataAccess extends SQLiteOpenHelper {
      */
 
     private static final String DATABASE_NAME = "chronoplus.db";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 11;
 
 
     static {
@@ -55,7 +57,39 @@ public class DataAccess extends SQLiteOpenHelper {
 
     public long newString(ShotString rec) {
         SQLiteDatabase db = getWritableDatabase();
-        return cupboard().withDatabase(db).put(rec);
+        long ret= cupboard().withDatabase(db).put(rec);
+        Log.i(TAG, "SAVESTRING " + ret);
+        return ret;
+    }
+
+    public long saveShot(ShotRecord rec) {
+        SQLiteDatabase db = getWritableDatabase();
+        long ret = cupboard().withDatabase(db).put(rec);
+        Log.i(TAG, "SAVE SHOT: " + ret);
+        return ret;
+    }
+
+    public class CustomComparator implements Comparator<ShotString> {
+        @Override
+        public int compare(ShotString o1, ShotString o2) {
+            return o2.created.compareTo(o1.created);
+        }
+    }
+
+    public class CustomComparatorShot implements Comparator<ShotRecord> {
+        @Override
+        public int compare(ShotRecord o1, ShotRecord o2) {
+            return o1.shotCount.compareTo(o2.shotCount);
+        }
+    }
+
+    public List<ShotString> getStrings()
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        QueryResultIterable<ShotString> res = cupboard().withDatabase(db).query(ShotString.class).query();
+        List<ShotString> ret = res.list();
+        Collections.sort(ret, new CustomComparator());
+        return ret;
     }
 
     public List<PelletRecord> getPellets() {
@@ -77,6 +111,15 @@ public class DataAccess extends SQLiteOpenHelper {
     public PelletRecord getPelletByName(String name) {
         SQLiteDatabase db = getWritableDatabase();
         return cupboard().withDatabase(db).query(PelletRecord.class).withSelection("name = ?", name).get();
+    }
+
+    public List<ShotRecord> getShots(long ss) {
+        SQLiteDatabase db = getWritableDatabase();
+        QueryResultIterable<ShotRecord> res = cupboard().withDatabase(db).query(ShotRecord.class).withSelection("shotStringId = ?", ((Long)ss).toString()).query();
+        List<ShotRecord> ret = res.list(true);
+        Log.i(TAG, "Loaded: " + ret.size() + " for id=" + ss);
+        Collections.sort(ret, new CustomComparatorShot());
+        return ret;
     }
 
     @Override

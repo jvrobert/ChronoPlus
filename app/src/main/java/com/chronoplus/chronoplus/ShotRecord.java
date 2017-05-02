@@ -7,9 +7,10 @@ import java.util.Date;
  */
 
 public class ShotRecord {
-    public long _id;
+    public Long _id;
     public long shotStringId;
     public float fps;
-    public float fpe;
+    public Float fpe;
     public Date inserted;
+    public Integer shotCount;
 }
